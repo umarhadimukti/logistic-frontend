@@ -1,4 +1,3 @@
-<!-- src/views/OrdersList.vue -->
 <template>
   <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,7 +11,7 @@
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <router-link
             to="/create-order"
-            class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:w-auto"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
           >
             <PlusIcon class="h-4 w-4 mr-2" />
             Create Order
@@ -30,7 +29,7 @@
                 id="statusFilter"
                 v-model="filters.status"
                 @change="applyFilters"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                class="mt-1 block w-full rounded-md px-2 py-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               >
                 <option value="">All Status</option>
                 <option value="PENDING">Pending</option>
@@ -48,7 +47,7 @@
                 @input="debounceFilter"
                 type="text"
                 placeholder="Filter by sender name"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                class="mt-1 block w-full rounded-md px-2 py-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               />
             </div>
 
@@ -60,14 +59,14 @@
                 @input="debounceFilter"
                 type="text"
                 placeholder="Filter by recipient name"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                class="mt-1 block w-full rounded-md px-2 py-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               />
             </div>
 
             <div class="flex items-end">
               <button
                 @click="resetFilters"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Reset Filters
               </button>
@@ -88,7 +87,7 @@
           <p class="mt-1 text-sm text-gray-500">{{ error }}</p>
           <button
             @click="fetchOrders"
-            class="mt-4 px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700"
+            class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
           >
             Try Again
           </button>
@@ -102,7 +101,7 @@
           </p>
           <router-link
             to="/create-order"
-            class="mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700"
+            class="mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
           >
             <PlusIcon class="h-4 w-4 mr-2" />
             Create Order
@@ -137,7 +136,7 @@
             <tbody class="bg-white divide-y divide-gray-200">
               <tr v-for="order in orders" :key="order.id" class="hover:bg-gray-50">
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm font-medium text-primary-600">
+                  <div class="text-sm font-medium text-indigo-600">
                     {{ order.trackingNumber }}
                   </div>
                 </td>
@@ -168,7 +167,7 @@
                     <select
                       v-if="canUpdateStatus(order)"
                       @change="handleStatusUpdate(order.id, $event)"
-                      class="text-xs border-gray-300 rounded-md focus:border-primary-500 focus:ring-primary-500"
+                      class="text-xs border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500"
                     >
                       <option value="">Update Status</option>
                       <option
@@ -193,7 +192,7 @@
                     <!-- View Details Button -->
                     <router-link
                       :to="`/track?tracking=${order.trackingNumber}`"
-                      class="text-primary-600 hover:text-primary-900 text-xs"
+                      class="text-indigo-600 hover:text-indigo-900 text-xs"
                     >
                       View Details
                     </router-link>
@@ -250,7 +249,7 @@
                   @click="goToPage(page)"
                   :class="[
                     page === pagination.page
-                      ? 'z-10 bg-primary-50 border-primary-500 text-primary-600'
+                      ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
                       : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
                     'relative inline-flex items-center px-4 py-2 border text-sm font-medium'
                   ]"

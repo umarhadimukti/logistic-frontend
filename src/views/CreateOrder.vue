@@ -121,8 +121,8 @@
     >
       <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div class="mt-3 text-center">
-          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-success-100">
-            <CheckCircleIcon class="h-6 w-6 text-success-600" />
+          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+            <CheckCircleIcon class="h-6 w-6 text-green-600" />
           </div>
           <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">Order Created Successfully!</h3>
           <div class="mt-2 px-7 py-3">

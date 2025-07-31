@@ -37,7 +37,7 @@ export function useOrders() {
     } finally {
       loading.value = false;
     }
-  }
+  };
 
   const fetchOrders = async () => {
     loading.value = true;
@@ -52,41 +52,41 @@ export function useOrders() {
     } finally {
       loading.value = false;
     }
-  }
+  };
 
   const updateOrderStatus = async (orderId: string, status: string): Promise<void> => {
     try {
-      const updatedOrder = await orderApi.updateOrderStatus(orderId, status)
-      const index = orders.value.findIndex(order => order.id === orderId)
+      const updatedOrder = await orderApi.updateOrderStatus(orderId, status);
+      const index = orders.value.findIndex(order => order.id === orderId);
       if (index !== -1) {
-        orders.value[index] = updatedOrder
+        orders.value[index] = updatedOrder;
       }
       if (currentOrder.value?.id === orderId) {
-        currentOrder.value = updatedOrder
+        currentOrder.value = updatedOrder;
       }
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Failed to update order'
-      throw err
+      error.value = err instanceof Error ? err.message : 'Failed to update order';
+      throw err;
     }
-  }
+  };
 
   const cancelOrder = async (orderId: string): Promise<void> => {
     try {
-      const canceledOrder = await orderApi.cancelOrder(orderId)
-      const index = orders.value.findIndex(order => order.id === orderId)
+      const canceledOrder = await orderApi.cancelOrder(orderId);
+      const index = orders.value.findIndex(order => order.id === orderId);
       if (index !== -1) {
-        orders.value[index] = canceledOrder
+        orders.value[index] = canceledOrder;
       }
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Failed to cancel order'
-      throw err
+      error.value = err instanceof Error ? err.message : 'Failed to cancel order';
+      throw err;
     }
-  }
+  };
   
   const setFilters = (newFilters: Partial<OrderFilters>) => {
-    Object.assign(filters, newFilters)
-    fetchOrders()
-  }
+    Object.assign(filters, newFilters);
+    fetchOrders();
+  };
 
   const resetFilters = () => {
     Object.assign(filters, {
@@ -94,10 +94,26 @@ export function useOrders() {
       sender: '',
       recipient: '',
       page: 1,
-      limit: 10
-    })
-    fetchOrders()
-  }
+      limit: 10,
+    });
+    fetchOrders();
+  };
+
+  const trackOrder = async (trackingNumber: string): Promise<Order> => {
+    loading.value = true;
+    error.value = null;
+    
+    try {
+      const order = await orderApi.trackOrder(trackingNumber);
+      currentOrder.value = order;
+      return order;
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Order not found';
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
 
   return {
     orders,
@@ -112,5 +128,6 @@ export function useOrders() {
     cancelOrder,
     setFilters,
     resetFilters,
+    trackOrder,
   }
 }

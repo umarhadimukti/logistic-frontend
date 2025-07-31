@@ -51,5 +51,10 @@ export const orderApi = {
   cancelOrder: async (orderId: string): Promise<Order> => {
     const response = await api.put<ApiResponse<Order>>(`/orders/${orderId}/cancel`)
     return response.data.data!
-  }
+  },
+
+  trackOrder: async (trackingNumber: string): Promise<Order> => {
+    const response = await api.get<ApiResponse<Order>>(`/orders/track/${trackingNumber}`)
+    return response.data.data!
+  },
 }
