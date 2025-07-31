@@ -1,5 +1,5 @@
 import { ref, reactive } from 'vue';
-import type { CreateOrderDto, Order, OrderFilters } from '@/types';
+import type { CreateOrderDto, Order, OrderFilters, PaginationResult } from '@/types';
 import { orderApi } from '@/services/api';
 
 export function useOrders() {
@@ -39,6 +39,21 @@ export function useOrders() {
     }
   }
 
+  const fetchOrders = async () => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const result: PaginationResult<Order> = await orderApi.getOrders(filters);
+      orders.value = result.data;
+      Object.assign(pagination, result.pagination);
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : "Failed to fetch orders.";
+    } finally {
+      loading.value = false;
+    }
+  }
+
   return {
     orders,
     currentOrder,
@@ -47,5 +62,6 @@ export function useOrders() {
     pagination,
     filters,
     createOrder,
+    fetchOrders,
   }
 }

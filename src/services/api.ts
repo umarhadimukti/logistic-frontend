@@ -1,4 +1,4 @@
-import type { ApiResponse, CreateOrderDto, Order } from '@/types';
+import type { ApiResponse, CreateOrderDto, Order, OrderFilters, PaginationResult } from '@/types';
 import axios from 'axios';
 
 const api = axios.create({
@@ -28,5 +28,17 @@ export const orderApi = {
   createOrder: async (orderData: CreateOrderDto): Promise<Order> => {
     const response = await api.post<ApiResponse<Order>>('/orders', orderData);
     return response.data.data!;
-  }
+  },
+  getOrders: async (filters: OrderFilters = {}) => {
+    const params = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined || value !== '') {
+        params.append(key, value.toString());
+      }
+    });
+
+    const response = await api.get<ApiResponse<PaginationResult<Order>>>(`/orders?${params}`);
+    return response.data.data!;
+  },
 }

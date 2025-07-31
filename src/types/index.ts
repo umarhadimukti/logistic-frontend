@@ -39,9 +39,19 @@ export interface CreateOrderDto {
 }
 
 export interface OrderFilters {
-  sender: string;
-  recipient: string;
-  status: string;
-  page: number;
-  limit: number;
+  sender?: string;
+  recipient?: string;
+  status?: OrderStatus | '';
+  page?: number;
+  limit?: number;
+}
+
+export interface PaginationResult<T> {
+  data: T[];
+  pagination: {
+    page: number;
+    limit: number;
+    pages: number;
+    total: number;
+  };
 }
