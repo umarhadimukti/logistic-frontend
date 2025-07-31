@@ -54,6 +54,51 @@ export function useOrders() {
     }
   }
 
+  const updateOrderStatus = async (orderId: string, status: string): Promise<void> => {
+    try {
+      const updatedOrder = await orderApi.updateOrderStatus(orderId, status)
+      const index = orders.value.findIndex(order => order.id === orderId)
+      if (index !== -1) {
+        orders.value[index] = updatedOrder
+      }
+      if (currentOrder.value?.id === orderId) {
+        currentOrder.value = updatedOrder
+      }
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Failed to update order'
+      throw err
+    }
+  }
+
+  const cancelOrder = async (orderId: string): Promise<void> => {
+    try {
+      const canceledOrder = await orderApi.cancelOrder(orderId)
+      const index = orders.value.findIndex(order => order.id === orderId)
+      if (index !== -1) {
+        orders.value[index] = canceledOrder
+      }
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Failed to cancel order'
+      throw err
+    }
+  }
+  
+  const setFilters = (newFilters: Partial<OrderFilters>) => {
+    Object.assign(filters, newFilters)
+    fetchOrders()
+  }
+
+  const resetFilters = () => {
+    Object.assign(filters, {
+      status: '',
+      sender: '',
+      recipient: '',
+      page: 1,
+      limit: 10
+    })
+    fetchOrders()
+  }
+
   return {
     orders,
     currentOrder,
@@ -63,5 +108,9 @@ export function useOrders() {
     filters,
     createOrder,
     fetchOrders,
+    updateOrderStatus,
+    cancelOrder,
+    setFilters,
+    resetFilters,
   }
 }

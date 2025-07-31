@@ -29,6 +29,7 @@ export const orderApi = {
     const response = await api.post<ApiResponse<Order>>('/orders', orderData);
     return response.data.data!;
   },
+  
   getOrders: async (filters: OrderFilters = {}) => {
     const params = new URLSearchParams();
 
@@ -41,4 +42,14 @@ export const orderApi = {
     const response = await api.get<ApiResponse<PaginationResult<Order>>>(`/orders?${params}`);
     return response.data.data!;
   },
+
+  updateOrderStatus: async (orderId: string, status: string): Promise<Order> => {
+    const response = await api.put<ApiResponse<Order>>(`/orders/${orderId}/status`, { status })
+    return response.data.data!
+  },
+
+  cancelOrder: async (orderId: string): Promise<Order> => {
+    const response = await api.put<ApiResponse<Order>>(`/orders/${orderId}/cancel`)
+    return response.data.data!
+  }
 }

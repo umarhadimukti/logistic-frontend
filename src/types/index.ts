@@ -20,8 +20,8 @@ export interface Order {
   origin: string;
   destination: string;
   status: OrderStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export enum OrderStatus {
@@ -41,7 +41,7 @@ export interface CreateOrderDto {
 export interface OrderFilters {
   sender?: string;
   recipient?: string;
-  status?: OrderStatus | '';
+  status?: OrderStatus | string;
   page?: number;
   limit?: number;
 }
