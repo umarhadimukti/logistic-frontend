@@ -4,3 +4,36 @@ export interface NotificationState {
   title: string;
   message: string;
 }
+
+export interface ApiResponse<T = any> {
+  success: boolean;
+  message?: string;
+  data?: T;
+  errors?: string[];
+}
+
+export interface Order {
+  id: string;
+  trackingNumber: string;
+  senderName: string;
+  recipientName: string;
+  origin: string;
+  destination: string;
+  status: OrderStatus;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export enum OrderStatus {
+  PENDING = 'PENDING',
+  IN_TRANSIT = 'IN_TRANSIT',
+  DELIVERED = 'DELIVERED',
+  CANCELED = 'CANCELED',
+}
+
+export interface CreateOrderDto {
+  senderName: string;
+  recipientName: string;
+  origin: string;
+  destination: string;
+}
