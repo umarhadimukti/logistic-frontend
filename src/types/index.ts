@@ -37,3 +37,11 @@ export interface CreateOrderDto {
   origin: string;
   destination: string;
 }
+
+export interface OrderFilters {
+  sender: string;
+  recipient: string;
+  status: string;
+  page: number;
+  limit: number;
+}
