@@ -209,49 +209,46 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { format } from 'date-fns'
+import { ref } from 'vue';
+import { format } from 'date-fns';
 import {
   ClockIcon,
   TruckIcon,
   CheckCircleIcon,
   XCircleIcon,
   MagnifyingGlassIcon
-} from '@heroicons/vue/24/outline'
-import { useOrders } from '@/composables/useOrders'
-import { useNotification } from '@/composables/useNotification'
-import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
-import StatusBadge from '@/components/orders/StatusBadge.vue'
-import { OrderStatus } from '@/types'
+} from '@heroicons/vue/24/outline';
+import { useOrders } from '@/composables/useOrders';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import StatusBadge from '@/components/orders/StatusBadge.vue';
+import { OrderStatus } from '@/types';
 
-const { currentOrder, loading, error, trackOrder } = useOrders()
-const { showError } = useNotification()
+const { currentOrder, loading, error, trackOrder } = useOrders();
 
-const trackingNumber = ref('')
+const trackingNumber = ref('');
 
 const handleTrack = async () => {
   if (!trackingNumber.value.trim()) {
-    showError('Validation Error', 'Please enter a tracking number')
-    return
+    return;
   }
 
   try {
-    await trackOrder(trackingNumber.value.trim())
+    await trackOrder(trackingNumber.value.trim());
   } catch (err) {
     // Error is already handled in composable
   }
-}
+};
 
 const formatDate = (dateString: string): string => {
-  return format(new Date(dateString), 'MMM dd, yyyy HH:mm')
-}
+  return format(new Date(dateString), 'MMM dd, yyyy HH:mm');
+};
 
 const isStatusReached = (status: OrderStatus): boolean => {
-  const statusOrder = [OrderStatus.PENDING, OrderStatus.IN_TRANSIT, OrderStatus.DELIVERED]
-  const currentIndex = statusOrder.indexOf(currentOrder.value?.status as OrderStatus)
-  const targetIndex = statusOrder.indexOf(status)
-  return currentIndex >= targetIndex
-}
+  const statusOrder = [OrderStatus.PENDING, OrderStatus.IN_TRANSIT, OrderStatus.DELIVERED];
+  const currentIndex = statusOrder.indexOf(currentOrder.value?.status as OrderStatus);
+  const targetIndex = statusOrder.indexOf(status);
+  return currentIndex >= targetIndex;
+};
 
 const getTimelineIconClass = (status: OrderStatus): string => {
   if (currentOrder.value?.status === status) {
@@ -261,10 +258,10 @@ const getTimelineIconClass = (status: OrderStatus): string => {
       [OrderStatus.DELIVERED]: 'bg-green-500 text-white',
       [OrderStatus.CANCELED]: 'bg-red-500 text-white'
     }
-    return classes[status]
+    return classes[status];
   } else if (isStatusReached(status)) {
-    return 'bg-green-500 text-white'
+    return 'bg-green-500 text-white';
   }
-  return 'bg-gray-200 text-gray-400'
-}
+  return 'bg-gray-200 text-gray-400';
+};
 </script>

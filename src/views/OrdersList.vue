@@ -285,7 +285,6 @@ import {
   ChevronRightIcon,
 } from '@heroicons/vue/24/solid';
 import { useOrders } from '@/composables/useOrders';
-import { useNotification } from '@/composables/useNotification';
 import LoadingSpinner from '../components/ui/LoadingSpinner.vue';
 import StatusBadge from '../components/orders/StatusBadge.vue';
 import { OrderStatus } from '@/types';
@@ -304,7 +303,6 @@ const {
   setFilters,
   resetFilters: resetOrderFilters,
 } = useOrders();
-const { showSuccess, showError } = useNotification();
 
 let debounceTimer: number | null | undefined = null;
 
@@ -355,10 +353,8 @@ const handleStatusUpdate = async (orderId: string, event: Event) => {
 
   try {
     await updateOrderStatus(orderId, newStatus);
-    showSuccess('Success', 'Order status updated successfully');
     target.value = ''; // Reset dropdown
   } catch (err) {
-    showError('Error', 'Failed to update order status');
   }
 };
 
@@ -369,9 +365,7 @@ const handleCancelOrder = async (orderId: string) => {
 
   try {
     await cancelOrder(orderId);
-    showSuccess('Success', 'Order canceled successfully');
   } catch (err) {
-    showError('Error', 'Failed to cancel order');
   }
 };
 

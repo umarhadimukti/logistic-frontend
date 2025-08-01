@@ -107,25 +107,14 @@
       <router-view />
     </main>
 
-    <!-- Global Notification -->
-    <AlertMessage
-      :show="notification.show"
-      :type="notification.type"
-      :title="notification.title"
-      :message="notification.message"
-      @close="hideNotification"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/solid'
-import { useNotification } from './composables/useNotification'
-import AlertMessage from './components/ui/AlertMessage.vue'
+import { ref } from 'vue';
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/solid';
 
-const { notification, hideNotification } = useNotification()
-const mobileMenuOpen = ref(false)
+const mobileMenuOpen = ref(false);
 </script>
 
 <style scoped>

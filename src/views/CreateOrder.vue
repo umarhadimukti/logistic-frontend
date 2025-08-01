@@ -152,13 +152,11 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { CheckCircleIcon } from '@heroicons/vue/24/solid';
 import { useOrders } from '@/composables/useOrders';
-import { useNotification } from '@/composables/useNotification';
 import LoadingSpinner from '../components/ui/LoadingSpinner.vue';
 import type { CreateOrderDto, Order } from '@/types';
 
 const router = useRouter();
 const { createOrder, loading } = useOrders();
-const { showSuccess, showError } = useNotification();
 
 const form = reactive<CreateOrderDto>({
   senderName: '',
@@ -223,9 +221,9 @@ const handleSubmit = async () => {
     const order = await createOrder(form);
     createdOrder.value = order;
     showSuccessModal.value = true;
-    showSuccess('Success', 'Order created successfully!');
+    // showSuccess('Success', 'Order created successfully!');
   } catch (err) {
-    showError('Error', 'Failed to create order. Please try again.');
+    // showError('Error', 'Failed to create order. Please try again.');
   }
 };
 
